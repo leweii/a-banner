@@ -28,6 +28,7 @@ export default function ResultDisplay({ imageUrl, loading, onDownload }: ResultD
   return (
     <div className="w-full">
       <div className="bg-gray-100 rounded-lg p-4">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={imageUrl} alt="Generated Art" className="w-full rounded-lg" />
       </div>
       <button
