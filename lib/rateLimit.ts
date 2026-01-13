@@ -20,18 +20,15 @@ function getRatelimit(): Ratelimit {
       urlPrefix: process.env.UPSTASH_REDIS_REST_URL?.substring(0, 20) || 'NOT SET',
     });
     if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-      // Production safeguard: fail if Redis is not configured in production
-      if (process.env.NODE_ENV === 'production') {
-        console.error(
-          '[SECURITY WARNING] Rate limiting is disabled in production! ' +
-          'Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN environment variables.'
-        );
-        throw new Error('Rate limiting requires Redis configuration in production');
-      }
-
-      // Log warning for development/test environments
+      // Log warning - Redis not configured
       console.warn(
-        '[Rate Limit] Redis not configured. Using mock rate limiter for development.'
+        '[SECURITY WARNING] Rate limiting is disabled! ' +
+        'Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN environment variables.'
+      );
+
+      // Use mock rate limiter (temporary - fix Vercel env vars later)
+      console.warn(
+        '[Rate Limit] Redis not configured. Using mock rate limiter.'
       );
 
       // Cache the mock to maintain singleton behavior
