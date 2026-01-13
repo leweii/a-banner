@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { text, font = 'block' } = body;
+    const { text, font = 'Standard' } = body;
 
     if (!text || text.trim() === '') {
       return NextResponse.json(
