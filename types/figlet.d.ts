@@ -62,8 +62,3 @@ declare module 'figlet/importable-fonts/Small' {
   const font: string;
   export default font;
 }
-
-declare module 'figlet/importable-fonts/Star Wars' {
-  const font: string;
-  export default font;
-}

@@ -13,7 +13,7 @@ import { ArtStyle } from '@/lib/prompt';
 const FONTS: FontName[] = [
   'Standard', 'Banner', 'Big', 'Block', 'Bubble',
   'Digital', 'Ivrit', 'Lean', 'Mini', 'Script',
-  'Shadow', 'Slant', 'Small', 'Star Wars',
+  'Shadow', 'Slant', 'Small',
 ];
 
 const STYLES = [
