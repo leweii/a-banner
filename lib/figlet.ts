@@ -1,58 +1,30 @@
-import figlet from 'figlet';
+/* eslint-disable @typescript-eslint/no-require-imports */
+// Use require to ensure fonts are loaded synchronously at runtime
 
-// Import fonts as modules (works on Vercel serverless)
-import standard from 'figlet/importable-fonts/Standard';
-import banner from 'figlet/importable-fonts/Banner';
-import big from 'figlet/importable-fonts/Big';
-import block from 'figlet/importable-fonts/Block';
-import bubble from 'figlet/importable-fonts/Bubble';
-import digital from 'figlet/importable-fonts/Digital';
-import ivrit from 'figlet/importable-fonts/Ivrit';
-import lean from 'figlet/importable-fonts/Lean';
-import mini from 'figlet/importable-fonts/Mini';
-import script from 'figlet/importable-fonts/Script';
-import shadow from 'figlet/importable-fonts/Shadow';
-import slant from 'figlet/importable-fonts/Slant';
-import small from 'figlet/importable-fonts/Small';
-import starWars from 'figlet/importable-fonts/Star Wars';
+const figlet = require('figlet');
 
-// Font data map - ensures imports are not tree-shaken
-const FONT_DATA: { [key: string]: string } = {
-  'Standard': standard,
-  'Banner': banner,
-  'Big': big,
-  'Block': block,
-  'Bubble': bubble,
-  'Digital': digital,
-  'Ivrit': ivrit,
-  'Lean': lean,
-  'Mini': mini,
-  'Script': script,
-  'Shadow': shadow,
-  'Slant': slant,
-  'Small': small,
-  'Star Wars': starWars,
+// Force load fonts immediately using require (not import)
+const fonts: Record<string, string> = {
+  'Standard': require('figlet/importable-fonts/Standard').default,
+  'Banner': require('figlet/importable-fonts/Banner').default,
+  'Big': require('figlet/importable-fonts/Big').default,
+  'Block': require('figlet/importable-fonts/Block').default,
+  'Bubble': require('figlet/importable-fonts/Bubble').default,
+  'Digital': require('figlet/importable-fonts/Digital').default,
+  'Ivrit': require('figlet/importable-fonts/Ivrit').default,
+  'Lean': require('figlet/importable-fonts/Lean').default,
+  'Mini': require('figlet/importable-fonts/Mini').default,
+  'Script': require('figlet/importable-fonts/Script').default,
+  'Shadow': require('figlet/importable-fonts/Shadow').default,
+  'Slant': require('figlet/importable-fonts/Slant').default,
+  'Small': require('figlet/importable-fonts/Small').default,
+  'Star Wars': require('figlet/importable-fonts/Star Wars').default,
 };
 
-// Initialize all fonts immediately - this runs on module load
-let fontsInitialized = false;
-
-function initializeFonts(): void {
-  if (fontsInitialized) return;
-
-  Object.entries(FONT_DATA).forEach(([fontName, fontData]) => {
-    try {
-      figlet.parseFont(fontName, fontData);
-    } catch (e) {
-      console.error(`Failed to parse font ${fontName}:`, e);
-    }
-  });
-
-  fontsInitialized = true;
+// Parse all fonts immediately
+for (const [name, data] of Object.entries(fonts)) {
+  figlet.parseFont(name, data);
 }
-
-// Initialize on module load
-initializeFonts();
 
 const AVAILABLE_FONTS = [
   'Standard',
@@ -82,23 +54,10 @@ export async function generateAscii(text: string, font: FontName = 'Standard'): 
     throw new Error('Text is required');
   }
 
-  // Ensure fonts are loaded (idempotent)
-  initializeFonts();
-
-  // Use synchronous version since fonts are preloaded
-  try {
-    const result = figlet.textSync(text, { font });
-    return result;
-  } catch {
-    // Fallback to async version
-    return new Promise((resolve, reject) => {
-      figlet.text(text, { font }, (err, result) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-        resolve(result || '');
-      });
-    });
+  // Re-parse font just before use to ensure it's loaded
+  if (fonts[font]) {
+    figlet.parseFont(font, fonts[font]);
   }
+
+  return figlet.textSync(text, { font });
 }
