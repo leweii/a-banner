@@ -16,21 +16,41 @@ import slant from 'figlet/importable-fonts/Slant';
 import small from 'figlet/importable-fonts/Small';
 import starWars from 'figlet/importable-fonts/Star Wars';
 
-// Parse and register all fonts
-figlet.parseFont('Standard', standard);
-figlet.parseFont('Banner', banner);
-figlet.parseFont('Big', big);
-figlet.parseFont('Block', block);
-figlet.parseFont('Bubble', bubble);
-figlet.parseFont('Digital', digital);
-figlet.parseFont('Ivrit', ivrit);
-figlet.parseFont('Lean', lean);
-figlet.parseFont('Mini', mini);
-figlet.parseFont('Script', script);
-figlet.parseFont('Shadow', shadow);
-figlet.parseFont('Slant', slant);
-figlet.parseFont('Small', small);
-figlet.parseFont('Star Wars', starWars);
+// Font data map
+const FONT_DATA: Record<string, string> = {
+  Standard: standard,
+  Banner: banner,
+  Big: big,
+  Block: block,
+  Bubble: bubble,
+  Digital: digital,
+  Ivrit: ivrit,
+  Lean: lean,
+  Mini: mini,
+  Script: script,
+  Shadow: shadow,
+  Slant: slant,
+  Small: small,
+  'Star Wars': starWars,
+};
+
+// Track loaded fonts
+const loadedFonts = new Set<string>();
+
+function ensureFontLoaded(fontName: string): void {
+  if (!loadedFonts.has(fontName)) {
+    const fontData = FONT_DATA[fontName];
+    if (fontData) {
+      figlet.parseFont(fontName, fontData);
+      loadedFonts.add(fontName);
+    }
+  }
+}
+
+// Pre-load all fonts immediately
+Object.keys(FONT_DATA).forEach((fontName) => {
+  ensureFontLoaded(fontName);
+});
 
 const AVAILABLE_FONTS = [
   'Standard',
@@ -59,6 +79,9 @@ export async function generateAscii(text: string, font: FontName = 'Standard'): 
   if (!text || text.trim() === '') {
     throw new Error('Text is required');
   }
+
+  // Ensure font is loaded before use
+  ensureFontLoaded(font);
 
   return new Promise((resolve, reject) => {
     figlet.text(text, { font }, (err, result) => {
