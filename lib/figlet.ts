@@ -16,41 +16,43 @@ import slant from 'figlet/importable-fonts/Slant';
 import small from 'figlet/importable-fonts/Small';
 import starWars from 'figlet/importable-fonts/Star Wars';
 
-// Font data map
-const FONT_DATA: Record<string, string> = {
-  Standard: standard,
-  Banner: banner,
-  Big: big,
-  Block: block,
-  Bubble: bubble,
-  Digital: digital,
-  Ivrit: ivrit,
-  Lean: lean,
-  Mini: mini,
-  Script: script,
-  Shadow: shadow,
-  Slant: slant,
-  Small: small,
+// Font data map - ensures imports are not tree-shaken
+const FONT_DATA: { [key: string]: string } = {
+  'Standard': standard,
+  'Banner': banner,
+  'Big': big,
+  'Block': block,
+  'Bubble': bubble,
+  'Digital': digital,
+  'Ivrit': ivrit,
+  'Lean': lean,
+  'Mini': mini,
+  'Script': script,
+  'Shadow': shadow,
+  'Slant': slant,
+  'Small': small,
   'Star Wars': starWars,
 };
 
-// Track loaded fonts
-const loadedFonts = new Set<string>();
+// Initialize all fonts immediately - this runs on module load
+let fontsInitialized = false;
 
-function ensureFontLoaded(fontName: string): void {
-  if (!loadedFonts.has(fontName)) {
-    const fontData = FONT_DATA[fontName];
-    if (fontData) {
+function initializeFonts(): void {
+  if (fontsInitialized) return;
+
+  Object.entries(FONT_DATA).forEach(([fontName, fontData]) => {
+    try {
       figlet.parseFont(fontName, fontData);
-      loadedFonts.add(fontName);
+    } catch (e) {
+      console.error(`Failed to parse font ${fontName}:`, e);
     }
-  }
+  });
+
+  fontsInitialized = true;
 }
 
-// Pre-load all fonts immediately
-Object.keys(FONT_DATA).forEach((fontName) => {
-  ensureFontLoaded(fontName);
-});
+// Initialize on module load
+initializeFonts();
 
 const AVAILABLE_FONTS = [
   'Standard',
@@ -80,16 +82,23 @@ export async function generateAscii(text: string, font: FontName = 'Standard'): 
     throw new Error('Text is required');
   }
 
-  // Ensure font is loaded before use
-  ensureFontLoaded(font);
+  // Ensure fonts are loaded (idempotent)
+  initializeFonts();
 
-  return new Promise((resolve, reject) => {
-    figlet.text(text, { font }, (err, result) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(result || '');
+  // Use synchronous version since fonts are preloaded
+  try {
+    const result = figlet.textSync(text, { font });
+    return result;
+  } catch {
+    // Fallback to async version
+    return new Promise((resolve, reject) => {
+      figlet.text(text, { font }, (err, result) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(result || '');
+      });
     });
-  });
+  }
 }
