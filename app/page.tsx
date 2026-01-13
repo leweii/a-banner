@@ -10,11 +10,7 @@ import Captcha from '@/components/Captcha';
 import { FontName } from '@/lib/figlet';
 import { ArtStyle } from '@/lib/prompt';
 
-const FONTS: FontName[] = [
-  'Standard', 'Banner', 'Big', 'Block', 'Bubble',
-  'Digital', 'Ivrit', 'Lean', 'Mini', 'Script',
-  'Shadow', 'Slant', 'Small', 'Star Wars',
-];
+const FONTS: FontName[] = ['block', 'slim', 'banner'];
 
 const STYLES = [
   { key: 'watercolor' as ArtStyle, name: '水彩', description: '柔和、流动、淡雅' },
@@ -26,7 +22,7 @@ const STYLES = [
 
 export default function Home() {
   const [text, setText] = useState('');
-  const [font, setFont] = useState<FontName>('Standard');
+  const [font, setFont] = useState<FontName>('block');
   const [style, setStyle] = useState<ArtStyle>('watercolor');
   const [ascii, setAscii] = useState('');
   const [asciiLoading, setAsciiLoading] = useState(false);

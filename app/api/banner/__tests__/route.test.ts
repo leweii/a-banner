@@ -5,7 +5,7 @@ describe('POST /api/banner', () => {
   it('should generate ASCII banner', async () => {
     const request = new NextRequest('http://localhost/api/banner', {
       method: 'POST',
-      body: JSON.stringify({ text: 'Hi', font: 'Standard' }),
+      body: JSON.stringify({ text: 'Hi', font: 'block' }),
     });
 
     const response = await POST(request);
@@ -19,7 +19,7 @@ describe('POST /api/banner', () => {
   it('should return 400 for empty text', async () => {
     const request = new NextRequest('http://localhost/api/banner', {
       method: 'POST',
-      body: JSON.stringify({ text: '', font: 'Standard' }),
+      body: JSON.stringify({ text: '', font: 'block' }),
     });
 
     const response = await POST(request);
