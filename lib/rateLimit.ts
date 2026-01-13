@@ -13,6 +13,12 @@ let ratelimit: Ratelimit | null = null;
 
 function getRatelimit(): Ratelimit {
   if (!ratelimit) {
+    console.log('[Rate Limit] Checking env vars:', {
+      hasUrl: !!process.env.UPSTASH_REDIS_REST_URL,
+      hasToken: !!process.env.UPSTASH_REDIS_REST_TOKEN,
+      nodeEnv: process.env.NODE_ENV,
+      urlPrefix: process.env.UPSTASH_REDIS_REST_URL?.substring(0, 20) || 'NOT SET',
+    });
     if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
       // Production safeguard: fail if Redis is not configured in production
       if (process.env.NODE_ENV === 'production') {
