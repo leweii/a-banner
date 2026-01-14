@@ -3,6 +3,11 @@ declare module 'figlet/importable-fonts/Standard' {
   export default font;
 }
 
+declare module 'figlet/importable-fonts/ANSI Shadow' {
+  const font: string;
+  export default font;
+}
+
 declare module 'figlet/importable-fonts/Banner' {
   const font: string;
   export default font;

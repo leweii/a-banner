@@ -17,13 +17,17 @@ describe('buildPrompt', () => {
 });
 
 describe('getAvailableStyles', () => {
-  it('should return all 5 styles', () => {
+  it('should return all 9 styles', () => {
     const styles = getAvailableStyles();
-    expect(styles).toHaveLength(5);
+    expect(styles).toHaveLength(9);
     expect(styles.map((s) => s.key)).toContain('watercolor');
     expect(styles.map((s) => s.key)).toContain('oil');
     expect(styles.map((s) => s.key)).toContain('pixel');
     expect(styles.map((s) => s.key)).toContain('neon');
     expect(styles.map((s) => s.key)).toContain('graffiti');
+    expect(styles.map((s) => s.key)).toContain('cyberpunk');
+    expect(styles.map((s) => s.key)).toContain('chrome');
+    expect(styles.map((s) => s.key)).toContain('glitch');
+    expect(styles.map((s) => s.key)).toContain('flame');
   });
 });

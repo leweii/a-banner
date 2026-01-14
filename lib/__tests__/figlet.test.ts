@@ -18,6 +18,7 @@ describe('getAvailableFonts', () => {
     const fonts = getAvailableFonts();
     expect(Array.isArray(fonts)).toBe(true);
     expect(fonts).toContain('Standard');
+    expect(fonts).toContain('ANSI Shadow');
     expect(fonts.length).toBeGreaterThan(0);
   });
 });

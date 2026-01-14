@@ -9,6 +9,7 @@ const fontData: Record<string, string> = {};
 
 const AVAILABLE_FONTS = [
   'Standard',
+  'ANSI Shadow',
   'Banner',
   'Big',
   'Block',
@@ -37,6 +38,7 @@ function ensureFontsLoaded(): void {
   try {
     // Load each font from importable-fonts (these are bundled ES modules, not file reads)
     fontData['Standard'] = require('figlet/importable-fonts/Standard').default;
+    fontData['ANSI Shadow'] = require('figlet/importable-fonts/ANSI Shadow').default;
     fontData['Banner'] = require('figlet/importable-fonts/Banner').default;
     fontData['Big'] = require('figlet/importable-fonts/Big').default;
     fontData['Block'] = require('figlet/importable-fonts/Block').default;

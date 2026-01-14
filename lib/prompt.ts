@@ -1,4 +1,4 @@
-export type ArtStyle = 'watercolor' | 'oil' | 'pixel' | 'neon' | 'graffiti';
+export type ArtStyle = 'watercolor' | 'oil' | 'pixel' | 'neon' | 'graffiti' | 'cyberpunk' | 'chrome' | 'glitch' | 'flame';
 
 interface StyleInfo {
   key: ArtStyle;
@@ -37,6 +37,30 @@ const STYLES: Record<ArtStyle, StyleInfo> = {
     name: '涂鸦',
     description: '街头、喷漆质感',
     prompt: 'street graffiti style, spray paint effect, urban wall, bold colors, street art',
+  },
+  cyberpunk: {
+    key: 'cyberpunk',
+    name: '赛博朋克',
+    description: '霓虹色彩、未来都市、科技感',
+    prompt: 'cyberpunk style, neon lights, futuristic city backdrop, rain reflections, holographic effects, tech noir atmosphere',
+  },
+  chrome: {
+    key: 'chrome',
+    name: '金属铬金',
+    description: '反光金属质感、3D立体字',
+    prompt: '3D chrome metal letters, reflective metallic surface, liquid metal effect, studio lighting, high polish finish',
+  },
+  glitch: {
+    key: 'glitch',
+    name: '故障艺术',
+    description: '数字故障、扭曲错位、RGB偏移',
+    prompt: 'glitch art style, digital distortion, RGB color shift, scan lines, corrupted data aesthetic, vaporwave',
+  },
+  flame: {
+    key: 'flame',
+    name: '火焰能量',
+    description: '燃烧效果、能量光芒',
+    prompt: 'flaming text effect, fire and embers, burning energy, sparks flying, molten lava glow, dramatic dark background',
   },
 };
 
