@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import TextInput from '@/components/TextInput';
 import FontSelector from '@/components/FontSelector';
 import StyleSelector from '@/components/StyleSelector';
 import AsciiPreview from '@/components/AsciiPreview';
 import ResultDisplay from '@/components/ResultDisplay';
-import Captcha from '@/components/Captcha';
+import Captcha, { CaptchaHandle } from '@/components/Captcha';
 import { FontName } from '@/lib/figlet';
 import { ArtStyle } from '@/lib/prompt';
 
@@ -39,6 +39,7 @@ export default function Home() {
   const [imageLoading, setImageLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [remaining, setRemaining] = useState<number | null>(null);
+  const captchaRef = useRef<CaptchaHandle>(null);
 
   // Debounced ASCII generation
   useEffect(() => {
@@ -99,7 +100,9 @@ export default function Home() {
       console.error('Generation error:', err);
     } finally {
       setImageLoading(false);
-      // 不清空 captchaToken，允许用户继续生成
+      // hCaptcha token 是一次性的，用完后需要重新验证
+      setCaptchaToken(null);
+      captchaRef.current?.reset();
     }
   }, [ascii, style, captchaToken]);
 
@@ -144,6 +147,7 @@ export default function Home() {
           {/* Captcha & Generate */}
           <div className="space-y-4">
             <Captcha
+              ref={captchaRef}
               onVerify={(token) => setCaptchaToken(token)}
               onExpire={() => setCaptchaToken(null)}
             />

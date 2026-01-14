@@ -110,20 +110,25 @@ export function buildPrompt(ascii: string, style: ArtStyle): string {
 
   return `Create a scenic landscape image with a giant banner in the mid-ground.
 
-The banner displays this ASCII art text:
+The banner displays this text in LARGE, BOLD, CLEAR letters:
 ${ascii}
 
 Scene composition:
-- MID-GROUND: A massive billboard or canvas banner prominently displaying the text above, clearly readable
+- MID-GROUND: A massive billboard or canvas banner prominently displaying the text above
 - FOREGROUND (close to viewer): ${foregroundElements.join(', ')}
 - BACKGROUND (far distance): ${backgroundElements.join(', ')}
 
 Art style: ${styleInfo.prompt}
 
-Requirements:
-- The banner with text must be the focal point, large and clearly visible
-- Create depth with foreground elements closer to viewer and background elements in the distance
-- Apply the ${styleInfo.name} artistic style consistently across the entire scene
-- Make it visually striking, immersive, and suitable for sharing
-- High quality, detailed artwork with rich atmosphere`;
+CRITICAL TEXT REQUIREMENTS:
+- The text on the banner MUST be the main focal point, taking up at least 40% of the image
+- Text must be LARGE, BOLD, and CRYSTAL CLEAR with high contrast against the banner background
+- Each letter must be perfectly legible and sharp, not blurry or artistic distortion
+- Use solid, thick lettering style - no thin strokes or decorative fonts that reduce readability
+- The banner background should be a solid contrasting color to make text pop
+
+Scene requirements:
+- Create depth with foreground elements closer to viewer and background in distance
+- Apply ${styleInfo.name} style to the scene EXCEPT the text (text stays sharp and clear)
+- High quality, detailed artwork`;
 }
