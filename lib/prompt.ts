@@ -68,18 +68,62 @@ export function getAvailableStyles(): StyleInfo[] {
   return Object.values(STYLES);
 }
 
+// 场景元素池，用于随机生成前景和背景
+const SCENE_ELEMENTS = {
+  foreground: [
+    'people walking',
+    'a person looking up',
+    'children playing',
+    'a couple holding hands',
+    'a cyclist riding by',
+    'a cat sitting',
+    'a dog running',
+    'birds flying low',
+    'flowers and grass',
+    'a street vendor',
+  ],
+  background: [
+    'distant mountains',
+    'rolling hills',
+    'a waterfall cascading',
+    'tall trees and forest',
+    'a calm lake',
+    'floating clouds',
+    'a river flowing',
+    'ancient ruins',
+    'windmills on hills',
+    'hot air balloons in sky',
+  ],
+};
+
+function getRandomElements(arr: string[], count: number): string[] {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}
+
 export function buildPrompt(ascii: string, style: ArtStyle): string {
   const styleInfo = STYLES[style];
 
-  return `Create an artistic typography image based on this ASCII art text:
+  // 随机选择 1-2 个前景元素和 1-2 个背景元素
+  const foregroundElements = getRandomElements(SCENE_ELEMENTS.foreground, Math.floor(Math.random() * 2) + 1);
+  const backgroundElements = getRandomElements(SCENE_ELEMENTS.background, Math.floor(Math.random() * 2) + 1);
 
+  return `Create a scenic landscape image with a giant banner in the mid-ground.
+
+The banner displays this ASCII art text:
 ${ascii}
 
-Transform this ASCII art into a beautiful ${styleInfo.prompt}.
+Scene composition:
+- MID-GROUND: A massive billboard or canvas banner prominently displaying the text above, clearly readable
+- FOREGROUND (close to viewer): ${foregroundElements.join(', ')}
+- BACKGROUND (far distance): ${backgroundElements.join(', ')}
+
+Art style: ${styleInfo.prompt}
 
 Requirements:
-- Keep the text clearly readable and prominent
-- Apply the artistic style to the entire composition
-- Make it visually striking and suitable for sharing
-- High quality, detailed artwork`;
+- The banner with text must be the focal point, large and clearly visible
+- Create depth with foreground elements closer to viewer and background elements in the distance
+- Apply the ${styleInfo.name} artistic style consistently across the entire scene
+- Make it visually striking, immersive, and suitable for sharing
+- High quality, detailed artwork with rich atmosphere`;
 }

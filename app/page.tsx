@@ -99,7 +99,7 @@ export default function Home() {
       console.error('Generation error:', err);
     } finally {
       setImageLoading(false);
-      setCaptchaToken(null);
+      // 不清空 captchaToken，允许用户继续生成
     }
   }, [ascii, style, captchaToken]);
 
@@ -119,11 +119,11 @@ export default function Home() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <header className="text-center mb-8">
-          <h1 className="title-handwriting text-4xl mb-2 flex items-center justify-center gap-3">
-            <span>✏️</span> ASCII 艺术画生成器
+          <h1 className="title-handwriting text-4xl mb-2">
+            ASCII 艺术画生成器
           </h1>
           <p className="title-handwriting-en text-xl">
-            Create your unique art ~
+            Create your unique art
           </p>
         </header>
 
@@ -151,9 +151,8 @@ export default function Home() {
             <button
               onClick={handleGenerate}
               disabled={!ascii || !captchaToken || imageLoading}
-              className="w-full btn-journal text-lg flex items-center justify-center gap-2"
+              className="w-full btn-journal text-lg"
             >
-              <span>🖌️</span>
               {imageLoading ? '生成中...' : '生成艺术图片'}
             </button>
 
@@ -178,7 +177,7 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="text-center mt-8 title-handwriting-en text-sm" style={{ color: 'var(--text-secondary)' }}>
-          Powered by figlet.js & Google Imagen AI ✨
+          Powered by figlet.js & Google Imagen AI
         </footer>
       </div>
     </main>

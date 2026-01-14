@@ -10,9 +10,9 @@ interface FontSelectorProps {
 
 export default function FontSelector({ value, onChange, fonts }: FontSelectorProps) {
   return (
-    <div className="w-full">
-      <label htmlFor="font-selector" className="title-handwriting text-lg flex items-center gap-2 mb-3">
-        <span>🔤</span> 选择字体
+    <div className="w-full paper-lined p-4 rounded-lg h-full flex flex-col">
+      <label htmlFor="font-selector" className="title-handwriting text-lg mb-3">
+        选择字体
       </label>
       <select
         id="font-selector"

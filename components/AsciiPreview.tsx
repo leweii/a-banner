@@ -42,8 +42,8 @@ export default function AsciiPreview({ ascii, loading }: AsciiPreviewProps) {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-3">
-        <label className="title-handwriting text-lg flex items-center gap-2">
-          <span>✨</span> ASCII 预览
+        <label className="title-handwriting text-lg">
+          ASCII 预览
         </label>
         {ascii && (
           <div className="flex items-center gap-2">
@@ -91,7 +91,7 @@ export default function AsciiPreview({ ascii, loading }: AsciiPreviewProps) {
           </pre>
         ) : (
           <div className="flex items-center justify-center h-[160px] text-[var(--text-secondary)] title-handwriting">
-            在上方输入文字预览 ASCII 效果 ~
+            在上方输入文字预览 ASCII 效果
           </div>
         )}
       </div>

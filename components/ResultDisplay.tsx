@@ -15,7 +15,7 @@ export default function ResultDisplay({ imageUrl, loading, onDownload }: ResultD
           <div className="absolute inset-2 rounded-full border-4 border-[var(--highlight-blue)] border-b-transparent animate-spin" style={{ animationDirection: 'reverse' }}></div>
         </div>
         <p className="title-handwriting text-lg">AI 正在创作中...</p>
-        <p className="text-sm text-[var(--text-secondary)] mt-2 title-handwriting-en">Just a moment ~</p>
+        <p className="text-sm text-[var(--text-secondary)] mt-2 title-handwriting-en">Just a moment</p>
       </div>
     );
   }
@@ -23,7 +23,6 @@ export default function ResultDisplay({ imageUrl, loading, onDownload }: ResultD
   if (!imageUrl) {
     return (
       <div className="w-full paper-card p-8 flex flex-col items-center justify-center min-h-[300px]">
-        <span className="text-4xl mb-4">🖼️</span>
         <p className="title-handwriting text-[var(--text-secondary)]">完成验证后点击生成按钮</p>
       </div>
     );
@@ -37,9 +36,9 @@ export default function ResultDisplay({ imageUrl, loading, onDownload }: ResultD
       </div>
       <button
         onClick={onDownload}
-        className="mt-6 btn-journal flex items-center gap-2"
+        className="mt-6 btn-journal"
       >
-        <span>💾</span> 保存到相册
+        保存到相册
       </button>
     </div>
   );

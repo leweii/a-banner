@@ -33,16 +33,15 @@ export default function StyleSelector({ value, onChange, styles }: StyleSelector
 
   return (
     <div className="w-full flex flex-col items-center py-6">
-      <h3 className="title-handwriting text-xl mb-6">选择你的画风 ✨</h3>
+      <h3 className="title-handwriting text-xl mb-6">选择你的画风</h3>
 
       <div className="relative w-[200px] h-[200px]">
-        {/* 中心画笔图标和风格名称 */}
+        {/* 中心风格名称 */}
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none">
-          <span className="text-3xl mb-1">🎨</span>
           {displayInfo && (
             <div className="text-center">
-              <div className="title-handwriting text-sm font-medium">{displayInfo.name}</div>
-              <div className="text-xs text-[var(--text-secondary)] mt-0.5">{displayInfo.description}</div>
+              <div className="title-handwriting text-lg font-medium">{displayInfo.name}</div>
+              <div className="text-xs text-[var(--text-secondary)] mt-1">{displayInfo.description}</div>
             </div>
           )}
         </div>
