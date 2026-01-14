@@ -41,23 +41,25 @@ export default function AsciiPreview({ ascii, loading }: AsciiPreviewProps) {
 
   return (
     <div className="w-full">
-      <div className="flex items-center justify-between mb-2">
-        <label className="block text-sm font-medium">ASCII 预览</label>
+      <div className="flex items-center justify-between mb-3">
+        <label className="title-handwriting text-lg flex items-center gap-2">
+          <span>✨</span> ASCII 预览
+        </label>
         {ascii && (
           <div className="flex items-center gap-2">
             <button
               onClick={() => setScale((s) => Math.max(0.3, s - 0.1))}
-              className="px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 rounded"
+              className="w-7 h-7 flex items-center justify-center text-sm bg-[var(--highlight-blue)] hover:bg-[var(--highlight-pink)] rounded-full transition-colors"
               title="缩小"
             >
               -
             </button>
-            <span className="text-xs text-gray-500 w-12 text-center">
+            <span className="text-xs text-[var(--text-secondary)] w-12 text-center title-handwriting-en">
               {Math.round(scale * 100)}%
             </span>
             <button
               onClick={() => setScale((s) => Math.min(2, s + 0.1))}
-              className="px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 rounded"
+              className="w-7 h-7 flex items-center justify-center text-sm bg-[var(--highlight-blue)] hover:bg-[var(--highlight-pink)] rounded-full transition-colors"
               title="放大"
             >
               +
@@ -67,26 +69,29 @@ export default function AsciiPreview({ ascii, loading }: AsciiPreviewProps) {
       </div>
       <div
         ref={containerRef}
-        className="bg-gray-900 text-green-400 p-4 rounded-lg overflow-auto min-h-[200px] max-h-[400px]"
+        className="paper-grid p-4 rounded-lg overflow-auto min-h-[200px] max-h-[400px]"
       >
         {loading ? (
           <div className="flex items-center justify-center h-[160px]">
-            <div className="animate-pulse text-lg">生成中...</div>
+            <div className="animate-pulse title-handwriting text-lg text-[var(--text-secondary)]">
+              生成中...
+            </div>
           </div>
         ) : ascii ? (
           <pre
             ref={preRef}
-            className="font-mono leading-tight"
+            className="leading-tight text-[var(--text-primary)]"
             style={{
               fontSize: `${scale * 14}px`,
               transformOrigin: 'top left',
+              fontFamily: 'var(--font-mono)',
             }}
           >
             {ascii}
           </pre>
         ) : (
-          <div className="flex items-center justify-center h-[160px] text-gray-500">
-            在上方输入文字预览 ASCII 效果
+          <div className="flex items-center justify-center h-[160px] text-[var(--text-secondary)] title-handwriting">
+            在上方输入文字预览 ASCII 效果 ~
           </div>
         )}
       </div>

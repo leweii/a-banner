@@ -11,14 +11,14 @@ interface FontSelectorProps {
 export default function FontSelector({ value, onChange, fonts }: FontSelectorProps) {
   return (
     <div className="w-full">
-      <label htmlFor="font-selector" className="block text-sm font-medium mb-2">
-        选择字体
+      <label htmlFor="font-selector" className="title-handwriting text-lg flex items-center gap-2 mb-3">
+        <span>🔤</span> 选择字体
       </label>
       <select
         id="font-selector"
         value={value}
         onChange={(e) => onChange(e.target.value as FontName)}
-        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        className="select-journal w-full"
       >
         {fonts.map((font) => (
           <option key={font} value={font}>

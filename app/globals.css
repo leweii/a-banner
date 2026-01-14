@@ -3,21 +3,178 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* 手帐配色 */
+  --bg-page: #FAF8F5;
+  --bg-paper: #FFFEF9;
+  --text-primary: #4A4543;
+  --text-secondary: #7A7775;
+  --grid-line: #E8EEF4;
+  --line-paper: #E8EEF4;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* 彩色高亮 */
+  --highlight-pink: #FFB5BA;
+  --highlight-blue: #A8D8EA;
+  --highlight-yellow: #FFEAA7;
+  --highlight-green: #B8E6C1;
+
+  /* 按钮/强调色 */
+  --accent: #FF8A80;
+  --accent-hover: #FF6B6B;
+
+  /* 字体 */
+  --font-handwriting: var(--font-zcool), 'Comic Sans MS', cursive;
+  --font-handwriting-en: var(--font-caveat), 'Comic Sans MS', cursive;
+  --font-mono: var(--font-mono), 'Courier New', monospace;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-page);
+  font-family: var(--font-handwriting);
+}
+
+/* 方格纸背景 */
+.paper-grid {
+  background-color: var(--bg-paper);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* 横线纸背景 */
+.paper-lined {
+  background-color: var(--bg-paper);
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    var(--line-paper) 31px,
+    var(--line-paper) 32px
+  );
+}
+
+/* 纸张卡片效果 */
+.paper-card {
+  background: var(--bg-paper);
+  border-radius: 4px;
+  box-shadow:
+    2px 2px 8px rgba(0, 0, 0, 0.06),
+    -1px -1px 4px rgba(255, 255, 255, 0.8);
+  position: relative;
+}
+
+/* 折角效果 */
+.paper-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 24px 24px 0;
+  border-color: transparent var(--bg-page) transparent transparent;
+}
+
+/* 手写标题样式 */
+.title-handwriting {
+  font-family: var(--font-handwriting);
+  color: var(--text-primary);
+}
+
+.title-handwriting-en {
+  font-family: var(--font-handwriting-en);
+  color: var(--text-secondary);
+}
+
+/* 手帐风格按钮 */
+.btn-journal {
+  background: var(--accent);
+  color: white;
+  font-family: var(--font-handwriting);
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.btn-journal:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.15);
+}
+
+.btn-journal:disabled {
+  background: #CCC;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* 手帐风格输入框 */
+.input-journal {
+  background: transparent;
+  border: none;
+  border-bottom: 2px dashed var(--text-secondary);
+  font-family: var(--font-handwriting);
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  padding: 8px 4px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-journal:focus {
+  border-bottom-color: var(--accent);
+  border-bottom-style: solid;
+}
+
+.input-journal::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+/* 手帐风格下拉框 */
+.select-journal {
+  background: var(--bg-paper);
+  border: 2px dashed var(--grid-line);
+  border-radius: 8px;
+  font-family: var(--font-handwriting);
+  font-size: 1rem;
+  color: var(--text-primary);
+  padding: 10px 16px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.select-journal:focus {
+  border-color: var(--accent);
+  border-style: solid;
+}
+
+/* 照片贴纸效果 */
+.photo-sticker {
+  background: white;
+  padding: 12px 12px 40px 12px;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  transform: rotate(-1deg);
+  position: relative;
+}
+
+.photo-sticker::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 20px;
+  background: linear-gradient(135deg, var(--highlight-yellow) 0%, #FFD93D 100%);
+  opacity: 0.8;
 }
 
 @layer utilities {

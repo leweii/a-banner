@@ -11,17 +11,21 @@ import { FontName } from '@/lib/figlet';
 import { ArtStyle } from '@/lib/prompt';
 
 const FONTS: FontName[] = [
-  'Standard', 'Banner', 'Big', 'Block', 'Bubble',
+  'Standard', 'ANSI Shadow', 'Banner', 'Big', 'Block', 'Bubble',
   'Digital', 'Ivrit', 'Lean', 'Mini', 'Script',
   'Shadow', 'Slant', 'Small',
 ];
 
 const STYLES = [
-  { key: 'watercolor' as ArtStyle, name: '水彩', description: '柔和、流动、淡雅' },
-  { key: 'oil' as ArtStyle, name: '油画', description: '厚重、笔触明显' },
-  { key: 'pixel' as ArtStyle, name: '像素', description: '复古游戏感' },
-  { key: 'neon' as ArtStyle, name: '霓虹', description: '发光、赛博朋克' },
-  { key: 'graffiti' as ArtStyle, name: '涂鸦', description: '街头、喷漆质感' },
+  { key: 'watercolor' as ArtStyle, name: '水彩', description: '柔和、流动、淡雅', color: '#A8D8EA' },
+  { key: 'oil' as ArtStyle, name: '油画', description: '厚重、笔触明显', color: '#8B7355' },
+  { key: 'pixel' as ArtStyle, name: '像素', description: '复古游戏感', color: '#7FCD91' },
+  { key: 'neon' as ArtStyle, name: '霓虹', description: '发光、赛博朋克', color: '#FF6B9D' },
+  { key: 'graffiti' as ArtStyle, name: '涂鸦', description: '街头、喷漆质感', color: '#FFA07A' },
+  { key: 'cyberpunk' as ArtStyle, name: '赛博朋克', description: '霓虹、未来都市', color: '#00D4FF' },
+  { key: 'chrome' as ArtStyle, name: '金属铬金', description: '反光金属质感', color: '#C0C0C0' },
+  { key: 'glitch' as ArtStyle, name: '故障艺术', description: '数字故障、RGB偏移', color: '#FF00FF' },
+  { key: 'flame' as ArtStyle, name: '火焰能量', description: '燃烧效果、能量光芒', color: '#FF4500' },
 ];
 
 export default function Home() {
@@ -111,16 +115,22 @@ export default function Home() {
   }, [imageUrl]);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
+    <main className="min-h-screen py-8 px-4">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-2">ASCII Banner Art</h1>
-        <p className="text-gray-600 text-center mb-8">
-          将文字转换为 ASCII 艺术，再用 AI 生成独特的艺术图片
-        </p>
+        {/* Header */}
+        <header className="text-center mb-8">
+          <h1 className="title-handwriting text-4xl mb-2 flex items-center justify-center gap-3">
+            <span>✏️</span> ASCII 艺术画生成器
+          </h1>
+          <p className="title-handwriting-en text-xl">
+            Create your unique art ~
+          </p>
+        </header>
 
-        <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
+        {/* Main Content */}
+        <div className="paper-card p-6 space-y-8">
           {/* Input Section */}
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-2 gap-6">
             <TextInput value={text} onChange={setText} />
             <FontSelector value={font} onChange={setFont} fonts={FONTS} />
           </div>
@@ -141,22 +151,19 @@ export default function Home() {
             <button
               onClick={handleGenerate}
               disabled={!ascii || !captchaToken || imageLoading}
-              className={`w-full py-4 font-medium rounded-lg transition-colors ${
-                !ascii || !captchaToken || imageLoading
-                  ? 'bg-gray-300 cursor-not-allowed'
-                  : 'bg-blue-500 hover:bg-blue-600 text-white'
-              }`}
+              className="w-full btn-journal text-lg flex items-center justify-center gap-2"
             >
-              {imageLoading ? '生成中...' : '生成 AI 艺术图片'}
+              <span>🖌️</span>
+              {imageLoading ? '生成中...' : '生成艺术图片'}
             </button>
 
             {error && (
-              <p className="text-red-500 text-center">{error}</p>
+              <p className="text-red-500 text-center title-handwriting">{error}</p>
             )}
 
             {remaining !== null && (
-              <p className="text-gray-500 text-center text-sm">
-                今日剩余次数: {remaining}
+              <p className="text-center text-sm title-handwriting-en" style={{ color: 'var(--text-secondary)' }}>
+                Today remaining: {remaining}
               </p>
             )}
           </div>
@@ -169,8 +176,9 @@ export default function Home() {
           />
         </div>
 
-        <footer className="text-center text-gray-400 text-sm mt-8">
-          Powered by figlet.js & Google Imagen AI
+        {/* Footer */}
+        <footer className="text-center mt-8 title-handwriting-en text-sm" style={{ color: 'var(--text-secondary)' }}>
+          Powered by figlet.js & Google Imagen AI ✨
         </footer>
       </div>
     </main>
